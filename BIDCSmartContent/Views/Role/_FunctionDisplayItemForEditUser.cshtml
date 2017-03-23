@@ -1,0 +1,17 @@
+﻿@using BIDVSmartContent.Helpers
+@model Dictionary<List<string>, BIDVSmartContent.Models.FunctionModel.FunctionViewModel>
+<div class="col-md-3">
+    <label class="position-relative">
+        @Html.CustomerCheckBox(Model.Keys.First()[0],Model.Values.First().FuncId.ToString(),new{@class="ace"})
+        @*<input type="checkbox" id="@Model.Values.First().FuncId" value="@Model.Values.First().FuncId" class="ace" />*@
+        <span class="lbl" />
+        @if (!string.IsNullOrEmpty(@Model.Keys.First()[1]))
+        {
+            <strong class="@Model.Keys.First()[1]">@Model.Values.First().FuncName</strong>
+        }
+        else
+        {
+            @Model.Values.First().FuncName
+        }
+    </label>
+</div>

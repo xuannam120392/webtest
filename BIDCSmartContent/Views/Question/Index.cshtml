@@ -1,0 +1,45 @@
+﻿@model BIDVSmartContent.Models.Question.QuestionViewModels
+@{
+    ViewBag.Title = "Cauhoi";
+    Layout = "~/Views/Font/Layout.cshtml";
+}
+@using (Html.BeginForm()) {
+<div id="wrap"> 	
+	<!-- NAVIGATION BEGIN -->
+    @Html.Partial("~/Views/Shared/_Header.cshtml", Model.MenuListModel); 
+	<!-- NAVIGAION END --> 
+	
+    <section id="news-box" class="section-contact">
+        <div class="container">
+            <div class="row">
+                <div class="title-col">
+                    <h1>@Model.QuestionTitle</h1>
+                 </div>
+                <div class="news-box-cont clearfix">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        @foreach (var item in Model.ListAnswerFeature)
+                        {     
+                            <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="@("heading" + Html.DisplayFor(modelItem => item.AS_ID))">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#@("collapse" + Html.DisplayFor(modelItem => item.AS_ID))" aria-expanded="true" aria-controls="@("collapse" + Html.DisplayFor(modelItem => item.AS_ID))">
+                                        @Html.Raw(item.QS_CONTENT)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="@("collapse" + Html.DisplayFor(modelItem => item.AS_ID))" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@("heading" + Html.DisplayFor(modelItem => item.AS_ID))">
+                                <div class="panel-body">
+                                     @Html.Raw(item.AS_CONTENT) 
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  <!-- SOCIAL BEGIN -->
+	@Html.Partial("~/Views/Shared/_Contact.cshtml"); 
+</div>
+}

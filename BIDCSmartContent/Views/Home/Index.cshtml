@@ -1,0 +1,82 @@
+﻿@using BIDVSmartContent.Models.UserModel
+@model BIDVSmartContent.Models.UserModel.UserProfileViewModel
+@{
+    ViewBag.Title = "Home Page";
+    var userLogin = ViewBag.UserLogin as UserLoginViewModel;
+}
+@{
+    Html.RenderPartial("_NavigationTitleLink", "");
+}
+<div class="page-content">
+    <div class="page-content-area">
+        <div class="page-header">
+            <h1>
+                <span>User Information</span> <small><i class="default-icon fa fa-angle-double-right"></i> <span>Profile</span></small>
+            </h1>
+        </div>
+        @if (!string.IsNullOrEmpty(ViewBag.Notify))
+        {
+            <h4 class="red" style="font-size: 16px">@ViewBag.Notify</h4>
+            <div class="space-8"></div>
+        }
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">User Name:</label>
+                        <div class="col-sm-9">
+                            <strong><span>@userLogin.UserName</span></strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Full Name:</label>
+                        <div class="col-sm-9">
+                            <strong><span>@userLogin.FullName</span></strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Branch:</label>
+                        <div class="col-sm-9">
+                            <strong><span>@Model.Branch</span></strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Bank POS:</label>
+                        <div class="col-sm-9">
+                            <strong><span>@Model.BankPos</span></strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Last Login:</label>
+                        <div class="col-sm-9">
+                            <strong><span>@Model.LastLogin</span></strong>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">Last IP Login:</label>
+                        <div class="col-sm-9">
+                            <strong><span>@Model.LastIpLogin</span></strong>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div id="navbar" class="navbar navbar-default">
+        <div class="navbar-container" id="navbar-container">
+            <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler"><span class="sr-only">menu</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            <div class="navbar-header pull-left">
+                <div class="box clearfix">
+                    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse"><i class="default-icon fa fa-angle-double-left" data-icon1="default-icon fa fa-angle-double-left" data-icon2="default-icon fa fa-angle-double-right"></i></div>
+                    <a href="#" class="navbar-brand"><img src="~/Content/images/logo.png" width="182" height="41" alt="logo"> </a>
+                    @{
+                        Html.RenderPartial("_MenuHeaderTop", @Model.ListFunctionLever1);
+                    }
+                </div>
+            </div>
+            @{
+                Html.RenderPartial("_UserInforLogin", @Model.UserLoginViewModel);
+            }
+        </div>
+    </div>*@

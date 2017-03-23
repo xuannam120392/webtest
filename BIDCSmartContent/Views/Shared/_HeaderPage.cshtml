@@ -1,0 +1,8 @@
+﻿@model IEnumerable<string>
+
+<div class="page-header">
+    <h1>
+        @Model.FirstOrDefault()
+        <small> <i class="default-icon fa fa-angle-double-right"></i>@Model.ElementAt(1)</small>
+    </h1>
+</div>

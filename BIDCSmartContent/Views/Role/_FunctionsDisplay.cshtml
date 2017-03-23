@@ -1,0 +1,51 @@
+﻿@using  BIDVSmartContent.Models.FunctionModel
+@{
+    var models = (List<FunctionViewModel>)ViewBag.FuncsList;
+    var funcLevel1 = models.Where(x => x.FuncLevel == 1 && x.FuncId != 1 && x.FuncDisplay =="1").OrderBy(m => m.FuncOrder).ToList();
+}
+<div class="col-sm-10">
+    <div class="tabbable">
+        <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+           @foreach (var func in funcLevel1)
+           {
+               if (func == funcLevel1.First())
+               {
+                   <li class="active">
+                       <a data-toggle="tab" href="@string.Format("#{0}_{1}",func.FuncName, func.FuncId)">@func.FuncName</a>
+                   </li>
+               }
+               else
+               {
+                <li>
+                    <a data-toggle="tab" href="@string.Format("#{0}_{1}",func.FuncName,func.FuncId)">
+                        @func.FuncName
+                    </a>
+                </li>
+               }
+           }
+        </ul>
+        <div class="tab-content">
+            @foreach (var func in funcLevel1)
+            {
+                if (func == funcLevel1.First())
+                {
+                    <div id="@string.Format("{0}_{1}",func.FuncName, func.FuncId)" class="tab-pane active">
+                        @foreach (var item in models.Where(m => m.FuncParentId == func.FuncId).OrderBy(m => m.FuncOrder).ToList())
+                        {
+                        Html.RenderPartial("_FunctionsLevelDisplay", item);
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div id="@string.Format("{0}_{1}",func.FuncName, func.FuncId)" class="tab-pane">
+                        @foreach (var item in models.Where(m => m.FuncParentId == func.FuncId).OrderBy(m => m.FuncOrder).ToList())
+                        {
+                            Html.RenderPartial("_FunctionsLevelDisplay", item);
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

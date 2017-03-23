@@ -1,0 +1,78 @@
+﻿@using BIDVSmartContent.Helpers
+@using BIDVSmartContent.Models.FunctionModel
+@model Dictionary<string, FunctionViewModel>
+
+@if (Model.Values.First().ChildFunctions.Count > 0 && Model.Values.First().ChildFunctions.First().FuncLevel == 3)
+{
+    <div class="row">
+        <div class="page-header"></div>
+        @{
+    Html.RenderPartial("_FunctionDisplayItemForEditUser", new Dictionary<List<string>, FunctionViewModel>()
+            {
+                {new List<string>(){Model.Keys.First(),"red"}, Model.Values.First()}
+            });
+        }
+    </div>
+    if (Model.Values.First().ChildFunctions.Count > 0)
+    {
+        foreach (var subItem in Model.Values.First().ChildFunctions)
+        {
+            <div class="row">
+                @{
+            Html.RenderPartial("_FunctionDisplayItemForEditUser", new Dictionary<List<string>, FunctionViewModel>()
+            {
+                {new List<string>(){Model.Keys.First(),"blue"}, subItem}
+            });
+            if (subItem.ChildFunctions.Count > 0)
+            {
+                foreach (var childFunc in subItem.ChildFunctions)
+                {
+                    if (subItem.ChildFunctions.IndexOf(childFunc) == 3)
+                    {
+                        <div class="col-md-3"></div>
+                    }
+                    Html.RenderPartial("_FunctionDisplayItemForEditUser", new Dictionary<List<string>, FunctionViewModel>()
+                         {
+                             {new List<string>(){Model.Keys.First(),""}, childFunc}
+                         });
+                }
+            }
+                }
+
+            </div>
+        }
+
+    }
+}
+else if (Model.Values.First().ChildFunctions.Count > 0 && Model.Values.First().ChildFunctions.First().FuncLevel == 4)
+{
+    <div class="row">
+        <div class="page-header"></div>
+        @{
+    Html.RenderPartial("_FunctionDisplayItemForEditUser", new Dictionary<List<string>, FunctionViewModel>()
+            {
+                {new List<string>(){Model.Keys.First(),"red"}, Model.Values.First()}
+            });
+        }
+        @foreach (var subItem in Model.Values.First().ChildFunctions)
+        {
+            Html.RenderPartial("_FunctionDisplayItemForEditUser", new Dictionary<List<string>, FunctionViewModel>()
+                         {
+                             {new List<string>(){Model.Keys.First(),""}, subItem}
+                         });
+        }
+    </div>
+}
+else if (Model.Values.First().ChildFunctions.Count == 0)
+{
+    <div class="row">
+        <div class="page-header"></div>
+        <div class="col-md-4">
+            <label class="position-relative">
+                @Html.CustomerCheckBox(Model.Keys.First(), Model.Values.First().FuncId.ToString(), new { @class = "ace" })
+                <span class="lbl" />
+                <strong class="red">@Model.Values.First().FuncName</strong>
+            </label>
+        </div>
+    </div>
+}

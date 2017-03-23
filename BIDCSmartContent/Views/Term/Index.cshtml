@@ -1,0 +1,46 @@
+﻿@model BIDVSmartContent.Models.Term.TermViewModels
+@{
+    ViewBag.Title = "DieuKhoan";
+    Layout = "~/Views/Font/Layout.cshtml";
+}
+
+@using (Html.BeginForm()) {
+<div id="wrap"> 
+	<!-- NAVIGATION BEGIN -->
+	@Html.Partial("~/Views/Shared/_Header.cshtml", Model.MenuListModel); 
+	<!-- NAVIGAION END --> 
+	
+<section id="news-box" class="section-contact">
+  <div class="container">
+    <div class="row">
+        <div class="title-col">
+        <h1> @Model.TermValue </h1>
+      </div>
+        <div class="news-box-cont clearfix">
+            <p class="date-style"> @Html.Raw(Model.TermDesc)</p>
+             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          @foreach (var item in Model.ListNewFeature)
+           {
+             <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="@("heading" + Html.DisplayFor(modelItem => item.ID))">
+      <h4 class="panel-title">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion"href="#@("collapse" + Html.DisplayFor(modelItem => item.ID))" aria-expanded="true" aria-controls="@("collapse" + Html.DisplayFor(modelItem => item.ID))">
+         @Html.DisplayFor(modelItem => item.TITLE) 
+        </a>
+      </h4>
+    </div>
+    <div id="@("collapse" + Html.DisplayFor(modelItem => item.ID))"  class="panel-collapse collapse" role="tabpanel" aria-labelledby="@("heading" + Html.DisplayFor(modelItem => item.ID))">
+      <div class="panel-body">
+           @Html.Raw(item.CONTENT) 
+      </div>
+    </div>
+  </div>
+           }
+       </div>
+       </div>
+    </div>
+     </div>
+    </section>
+    @Html.Partial("~/Views/Shared/_Contact.cshtml"); 
+</div>
+}

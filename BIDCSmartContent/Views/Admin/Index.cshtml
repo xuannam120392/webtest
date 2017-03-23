@@ -1,0 +1,221 @@
+﻿@using System.Collections
+@using BIDVSmartContent.Models.FunctionModel
+@using BIDVSmartContent.Models.RoleModel
+@*@model Acleda.Models.UserModel.UserMenuViewModel*@
+
+@{
+    ViewBag.Title = "User Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listRole = (List<RoleViewModel>)ViewData["RoleList"];
+    var userName = User.Identity.Name;
+    const int f = FunctionIdConstant.FuncSystemId;
+    const int c = FunctionIdConstant.FuncUserListId;
+    var role = ViewBag.Role;
+}
+@{
+    Html.RenderPartial("_NavigationTitleLink", "User List");
+}
+<div class="page-content">
+    <div class="page-content-area">
+        @{
+            Html.RenderPartial("_HeaderPage", new[] { "User Manager", "User List" });
+        }
+        <div class="row" ng-app="systemSearchApp">
+            <div class="col-xs-12" ng-controller="userController">
+                <form class="form-horizontal row clearfix" role="form">
+                    <div class="col-sm-5">
+                        <div class="form-group clearfix">
+                            <label class="col-sm-5 control-label no-padding-right p_top"> User Name: </label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="text" placeholder="User Name" id="id-user-name">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-5">
+                        <div class="form-group clearfix">
+                            <label class="col-sm-5 control-label no-padding-right p_top"> Status: </label>
+                            <div class="col-sm-7">
+                                @Html.DropDownList("status", new SelectList(new Dictionary<string, string>()
+                                {
+                                    {"1", "Active"},{"0","Inactive"}        
+                                },"Key", "Value"),"-- All --", new{@class="form-control"})
+                                @*<input class="form-control" type="text" id="id-full-name" placeholder="Full Name">*@
+                            </div>
+                        </div>
+                    </div>                                  
+                    <div class="clear"></div>
+                    <div class="clearfix form-actions center">
+                        <a class="btn btn-primary" href="" ng-click="userSearch()">Search</a>
+                        @*<input class="btn btn-primary" type="submit" value="Search">*@
+                        <a href="@Url.Action("CreateUser","Admin", new {f=FunctionIdConstant.FuncSystemId,c=FunctionIdConstant.FuncCreateUserId})" id="btn-create-user" class="btn btn-warning">Add new</a>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div id="table_list_wrapper" class="dataTables_wrapper form-inline">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="dataTables_length">
+                                        <label>
+                                            Display
+                                            <select ng-model="PerPageItems" ng-init="PerPageItems='10'">
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                                <option value="40">40</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="200">200</option>
+                                                <option value="500">500</option>
+                                                <option value="1000">1000</option>
+                                                <option value="2000">2000</option>
+                                            </select> Records
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="dataTables_filter">
+                                        <label>
+                                            Search:
+                                            <input type="text" class="form-control input-sm" placeholder="search" ng-model="search" ng-change="filter()">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <table class="table table-striped table-bordered table-hover dataTable" id="tblUser">
+                                    <tr>
+                                        <th>
+                                            Ordinal
+                                        </th>
+                                        <th>
+                                            User Name
+                                        </th>
+                                        <th>
+                                            Full Name
+                                        </th>
+                                        <th>
+                                            Created date
+                                        </th>
+                                        <th>
+                                            Create By User
+                                        </th> 
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Action
+                                        </th>
+                                    </tr>
+                                    <tr ng-show="filteredItems > 0" ng-repeat="item in filtered = (datas |filter :search) | PageStart:(currentPage-1)*PerPageItems | limitTo:PerPageItems">
+
+                                        <td style="width: 70px">
+                                            {{item.Stt}}
+                                        </td>
+                                        <td style="width: 120px">
+                                            {{item.UserName}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            {{item.FullName}}
+                                        </td>
+                                        <td style="width: 200px">
+                                            {{item.CreateDate}}
+                                        </td>
+                                        <td style="width: 220px">
+                                            {{item.CreateByUser}}
+                                        </td>
+                                        <td>
+                                            <span ng-if="item.Status == true" class="label label-sm label-success">Acitve</span>
+                                            <span ng-if="item.Status == false" class="label label-danger label-sm">Inactive</span>
+                                        </td>
+                                        <td style="width: 150px">
+                                            <div ng-if="item.CreateByUser == '@userName'">
+                                                <a title="Edit user" class="blue" ng-href="~/Admin/EditUser/{{item.UserId}}?f=@f&c=@c"> <i class="default-icon fa fa-pencil bigger-150"></i></a>&nbsp;
+                                                @*<a title="Delete user" ng-click="deleteUser(item)" href="" class="red"> <i class="default-icon fa fa-trash-o bigger-150"></i></a>*@
+                                                <a ng-if="item.Status == false" title="Change Status" ng-click="changeStatus(item)" class="blue" href=""> <i class="ic_default ic_unlock"></i></a>
+                                                <a ng-if="item.Status == true" title="Change Status" ng-click="changeStatus(item)" class="red" href=""> <i class="ic_default ic_lock"></i></a>
+                                                <a title="Reset Password" class="blue" ng-click="resetPassword(item)" href=""> <i class="ic_default ic_reset_password"></i></a>
+                                                <a title="Assign Role" class="blue" href="#" data-toggle="modal" data-target="#assign_role_popup_{{item.UserId}}"> <i class="ic_default ic_assign_role"></i></a>
+                                                @*--Show popup assign role*@
+                                                <div class="modal fade bs-example-modal-lg" id="assign_role_popup_{{item.UserId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">Assign Role</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form class="form-horizontal" role="form">
+                                                                    <div class="form-group" style="display: block; margin-bottom: 4px;">
+                                                                        <label for="" class="col-sm-3 control-label no-padding-right">User Name:</label>
+                                                                        <div class="col-sm-9">
+                                                                            <strong>{{item.UserName}}</strong>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group clearfix" style="display: block">
+                                                                        <label class="col-sm-3 control-label no-padding-right"> Role Name: </label>
+                                                                        <div class="col-sm-9">
+                                                                            <ul id="checkAllBoxesRole_{{item.UserId}}" style="margin: 0">
+                                                                                @foreach (var roleViewModel in listRole)
+                                                                                {
+                                                                                    <li style="list-style-type: none">
+
+                                                                                        <input type="checkbox" class="roleSelected" id="@roleViewModel.RoleId" value="@roleViewModel.RoleId" ng-checked="isChecked(item,@roleViewModel.RoleId)" />
+                                                                                        <label id="@roleViewModel.RoleId">@roleViewModel.RoleName</label>
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                                                <a id="btn-assign-user-role" ng-click="assignRole(item)" href="" class="btn btn-primary">Save</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                @*--End show popup assign role*@
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td ng-show="filteredItems <= 0" colspan="9" style="text-align: center">
+                                            "No search results found"
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div ng-show="filteredItems > 0">
+                                <pagination num-pages="numberPages" total-items="filteredItems" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-model="currentPage" items-per-page="PerPageItems"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/system-search.js")"></script>
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            changeMonth: true,
+            changeYear: true
+        }).on('changeDate', function() {
+            $(this).datepicker('hide');
+        });
+        
+        //disbale keyboard tren datapicker
+        //$('.datepicker').keydown(function(event) {
+        //    return false;
+        //});
+    </script>
+}
+

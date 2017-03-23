@@ -1,0 +1,142 @@
+﻿@model BIDVSmartContent.Models.RoleModel.CreateRoleModel
+@using BIDVSmartContent.Helpers
+@using BIDVSmartContent.Models.FunctionModel
+@{
+    var models = (List<FunctionViewModel>)ViewBag.FuncsList;
+    var funcLevel1 = models.Where(x => x.FuncLevel == 1 && x.FuncId != 1).OrderBy(m => m.FuncOrder).ToList();
+}
+
+<div class="col-sm-10">
+    <div class="tabbable">
+        <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+            @foreach (var func in funcLevel1)
+            {
+                if (func == funcLevel1.First())
+                {
+                    <li class="active">
+                        <a data-toggle="tab" href="@string.Format("#{0}_{1}",func.FuncName, func.FuncId)">@func.FuncName</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a data-toggle="tab" href="@string.Format("#{0}_{1}",func.FuncName,func.FuncId)">
+                            @func.FuncName
+                        </a>
+                    </li>
+                }
+            }
+            @*<li class="active">
+                    <a data-toggle="tab" href="@string.Format("#{0}",FunctionIdConstant.FuncSystemId)">System</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#operation_id">
+                        Operation
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#consumer_id">Consumer</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#support_id">Support</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#report_id">Report</a>
+                </li>*@
+        </ul>
+         <div class="tab-content">
+            @foreach (var func in funcLevel1)
+            {
+                if (func == funcLevel1.First())
+                {
+                    <div id="@string.Format("{0}_{1}",func.FuncName, func.FuncId)" class="tab-pane active">
+                        @foreach (var item in models.Where(m => m.FuncParentId == func.FuncId).OrderBy(m => m.FuncOrder).ToList())
+                        {
+                            Html.RenderPartial("_FunctionLevelDisplayForEditRole", new Dictionary<string, FunctionViewModel>()
+                        {
+                            {Model.ArrayFunc, item}
+                        });
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div id="@string.Format("{0}_{1}",func.FuncName, func.FuncId)" class="tab-pane">
+                        @foreach (var item in models.Where(m => m.FuncParentId == func.FuncId).OrderBy(m => m.FuncOrder).ToList())
+                        {
+                            Html.RenderPartial("_FunctionLevelDisplayForEditRole", new Dictionary<string, FunctionViewModel>()
+                        {
+                            {Model.ArrayFunc, item}
+                        });
+                        }
+                    </div>
+                }
+            }
+            @*<div id="system_id" class="tab-pane in active">
+                    @if (models != null && models.Count > 0)
+                    {
+                        foreach (var item in models.Where(m => m.FuncParentId == FunctionIdConstant.FuncSystemId).OrderBy(m => m.FuncOrder).ToList())
+                        {
+
+                            Html.RenderPartial("_FunctionLevelDisplayForEditRole", new Dictionary<string, FunctionViewModel>()
+                            {
+                                {Model.ArrayFunc, item}
+                            });
+                        }
+                    }
+                </div>
+                <div id="operation_id" class="tab-pane in">
+                    @if (models != null && models.Count > 0)
+                    {
+                        foreach (var item in models.Where(m => m.FuncParentId == FunctionIdConstant.FuncOperationListId).OrderBy(m => m.FuncOrder).ToList())
+                        {
+                            Html.RenderPartial("_FunctionLevelDisplayForEditRole", new Dictionary<string, FunctionViewModel>()
+                            {
+                                {Model.ArrayFunc, item}
+                            });
+                        }
+                    }
+                </div>
+                <div id="consumer_id" class="tab-pane in">
+                    @if (models != null && models.Count > 0)
+                    {
+                        foreach (var item in models.Where(m => m.FuncParentId == FunctionIdConstant.FuncConsumerId).OrderBy(m => m.FuncOrder).ToList())
+                        {
+
+                            Html.RenderPartial("_FunctionLevelDisplayForEditRole", new Dictionary<string, FunctionViewModel>()
+                            {
+                                {Model.ArrayFunc, item}
+                            });
+                        }
+                    }
+                </div>
+                <div id="support_id" class="tab-pane in">
+                    @if (models != null && models.Count > 0)
+                    {
+                        foreach (var item in models.Where(m => m.FuncParentId == FunctionIdConstant.FuncSupportId).OrderBy(m => m.FuncOrder).ToList())
+                        {
+
+                            Html.RenderPartial("_FunctionLevelDisplayForEditRole", new Dictionary<string, FunctionViewModel>()
+                            {
+                                {Model.ArrayFunc, item}
+                            });
+                        }
+                    }
+                </div>
+                <div id="report_id" class="tab-pane in">
+                    @if (models != null && models.Count > 0)
+                    {
+                        foreach (var item in models.Where(m => m.FuncParentId == FunctionIdConstant.FuncReportId).OrderBy(m => m.FuncOrder).ToList())
+                        {
+
+                            Html.RenderPartial("_FunctionLevelDisplayForEditRole", new Dictionary<string, FunctionViewModel>()
+                            {
+                                {Model.ArrayFunc, item}
+                            });
+                        }
+                    }
+                </div>*@
+        </div>
+    </div>
+</div>
+

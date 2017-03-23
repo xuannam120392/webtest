@@ -1,0 +1,15 @@
+﻿@model Dictionary<string, BIDVSmartContent.Models.FunctionModel.FunctionViewModel>
+<div class="col-md-3">
+    <label class="position-relative">
+        <input type="checkbox" id="@Model.Values.First().FuncId" value="@Model.Values.First().FuncId" class="ace" />
+        <span class="lbl" />
+        @if (!string.IsNullOrEmpty(@Model.Keys.First()))
+        {
+            <strong class="@Model.Keys.First()">@Model.Values.First().FuncName</strong>
+        }
+        else
+        {
+            @Model.Values.First().FuncName
+        }
+    </label>
+</div>

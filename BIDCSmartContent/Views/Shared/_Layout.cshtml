@@ -1,0 +1,114 @@
+﻿@using BIDVSmartContent.Models.FunctionModel
+@using BIDVSmartContent.Models.UserModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/jquery-ui.min.css")" rel="stylesheet"/>
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet"/>
+    <link href="@Url.Content("~/Content/theme.css")" rel="stylesheet"/>
+    <link href="@Url.Content("~/Content/skins.min.css")" rel="stylesheet"/>
+    <link href="@Url.Content("~/Content/rtl.min.css")" rel="stylesheet"/>
+    <link href="@Url.Content("~/Content/font-awesome.min.css")" rel="stylesheet"/>
+    <script src="@Url.Content("~/Scripts/modernizr-2.6.2.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-1.10.2.js")"></script>  
+</head>
+<body class="no-skin">
+    <div id="navbar" class="navbar navbar-default">
+        <div class="navbar-container" id="navbar-container">
+            <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler"><span class="sr-only">menu</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            <div class="navbar-header pull-left">
+                <div class="box clearfix">
+                    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse"><i class="default-icon fa fa-angle-double-left" data-icon1="default-icon fa fa-angle-double-left" data-icon2="default-icon fa fa-angle-double-right"></i></div>
+                    <a href="#" class="navbar-brand"><img src="~/Content/images/logo_nav.png" width="182" height="41" alt="logo"> </a>
+                    @{
+                        Html.RenderPartial("_MenuHeaderTop", (List<FunctionViewModel>)ViewBag.FuncsTopMenu);
+                    }
+                </div>
+            </div>
+            @{
+                Html.RenderPartial("_UserInforLogin", (UserLoginViewModel)ViewBag.UserLogin);
+            }
+        </div>
+    </div>
+    <div class="main-container" id="main-container">
+        @{
+            Html.RenderPartial("_SideBarMenu");
+        }
+        <div class="main-content">
+            @RenderBody()
+        </div>
+
+    </div>
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-content"> <span class="bigger-120">&copy;  2015 Web Content BIDV </span> </div>
+        </div>
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse"> <i class="default-icon fa fa-angle-double-up icon-only bigger-110"></i> </a>
+    </footer> 
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/respond.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.dataTables.bootstrap.js")"></script>
+    <script src="@Url.Content("~/Scripts/sms.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/elements.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/sms-extra.min.js")"></script>
+    <script src="@Url.Content("~/ckeditor/ckeditor.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js")"></script>    @RenderSection("scripts", required: false)
+</body>
+</html>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.nav-top a').click(function () {
+            $('.nav-top li.active').removeClass('active'); //remove li dang co class active
+            $(this).parent().addClass('active'); // add class active vao li hien tai
+            $('li.hsub.open').removeClass('open');
+            $('ul.submenu.nav-show').removeAttr('style').removeClass('nav-show');
+            var id = $(this).attr('id');
+            var liOpen = "li" + "#" + id + ".hsub";
+            $(liOpen).addClass('hsub open');
+            $(liOpen).find('ul.submenu').addClass('nav-show').css({ "display": "block" });
+            return false;
+        });
+        $('.nav.nav-list > li.hsub > a').click(function () {
+            var id = $(this).attr('id');
+            $('.nav-top li.active').removeClass('active');
+            var topLiActive = ".nav-top li#" + id;
+            $(topLiActive).addClass('active');
+        });
+        var param = getUrlParam('f');
+        if (param != null) {
+            $('ul.submenu.nav-show > li.active').removeClass('active');
+
+            //thiet lap active cho top menu
+            $('.nav-top li.active').removeClass('active');
+            var topLiActive = ".nav-top li#" + param;
+            $(topLiActive).addClass('active');
+            //open cho left menu
+            $('li.hsub.open').removeClass('open');
+            $('ul.submenu.nav-show').removeAttr('style').removeClass('nav-show');
+            var liOpen = "li" + "#" + param + ".hsub";
+            $(liOpen).addClass('hsub open');
+            $(liOpen).find('ul.submenu').addClass('nav-show').css({ "display": "block" });
+            //set current link active
+            var id = getUrlParam('c');
+            var currentLi = ".submenu.nav-show li#" + id;
+            $(currentLi).addClass('active');
+        }
+
+    });
+    function getUrlParam(name) {
+        var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+        if (results != null)
+            return results[1] || 0;
+        return null;
+    }
+    function getRootUrl() {
+        return '';
+    }
+</script>

@@ -1,0 +1,108 @@
+﻿@model BIDVSmartContent.Models.Contact.ContactModel
+@using (Html.BeginForm()) {
+    <section id="contact">
+	    <div class="container">
+            <div class="col-md-7">
+                <h2>@Model.BlockFooter.TITLE</h2>
+                @Html.Raw(@Model.BlockFooter.CONTENT)
+                <p><a href="@Model.SiteMain" target="_blank" style="color:#fff">@Model.SiteMain</a></p>
+                <div class="hotline">@Model.HotLineTitle<a href="@Model.HotLine">@Model.HotLine</a></div>
+                <ul class="social-icons">
+                    <li><a class="soc-icon-facebook" href="https://www.facebook.com/sharer/sharer.php?purl=http://www.mobilebanking.bidc.com.kh/" target="_blank"></a></li>
+                    <li><a class="soc-icon-twitter" href="https://twitter.com/intent/tweet?url=http://www.mobilebanking.bidc.com.kh/" target="_blank"></a></li>
+                    <li><a class="soc-icon-googleplus" href="https://plus.google.com/share?url=http://www.mobilebanking.bidc.com.kh/" target="_blank"></a></li>
+                </ul>
+            </div>
+           <div class="col-md-5">
+                <h2>@Model.ContactTitle</h2>
+                <form>
+                     <div class="form-group clearfix">
+                        <div class="col-md-offset-2 col-md-9">
+                            <label id="lblMessage" class="lblmsg"></label>
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @id = "name", @maxlength = "255", placeholder = "Full-Name" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", @maxlength = "255", placeholder = "Email" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Sdt, new { @class = "form-control", @id = "tel", @maxlength = "11", placeholder = "Phone Number" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextAreaFor(m => m.Noidung, new { @class = "form-control", @id = "content", placeholder = "Content", @rows = "3" })
+                    </div>
+                    <input type="submit" value="Submit" id="create" class="btn btn-primary">
+                </form>
+            </div>
+    </section>
+	<!-- SOCIAL END --> 
+	<footer id="footer">
+		<div class="container">
+            <p class="copyright">@Model.CopyRight</p>
+		</div>
+	</footer>
+}
+<script type="text/javascript">
+
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+    function isMobile(mobile) {
+        var mobileNo = /^[0]{1}[1-9]{1}[0-9]{8,9}$/;
+        return mobileNo.test(mobile)
+    }
+    $(document).ready(function () {
+        $("#create").click(function () {
+            var formData = new FormData();
+            formData.append('Name', $('#name').val());
+            formData.append('Email', $('#email').val());
+            formData.append('Sdt', $('#tel').val());
+            formData.append('Noidung', $('#content').val());
+
+            if ($('#name').val() === "" || $('#email').val() === "" || $('#tel').val() === "" || $('#content').val() === "") {
+                document.getElementById("lblMessage").innerText = "All must be require.";
+                document.getElementById("lblMessage").style.color = "red";
+                return false;
+            }
+            if (!validateEmail($('#email').val())) {
+                document.getElementById("lblMessage").innerText = "Email is invalid";
+                document.getElementById("lblMessage").style.color = "red";
+                return false;
+            }
+            if (!isMobile($('#tel').val())) {
+                document.getElementById("lblMessage").innerText = "Mobile is invalid";
+                document.getElementById("lblMessage").style.color = "red";
+                return false;
+            }
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                url: '/Event/Contact',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false
+            }).success(function (data) {
+                if (redirectToLogin(data)) {
+                    window.location.href = "/Index/Index";
+                } else {
+                    document.getElementById("lblMessage").innerText = data;
+                    document.getElementById("lblMessage").style.color = "white";
+                }
+
+            }).error(function (data) {
+
+            });
+            return false;
+        });
+    });
+
+    function redirectToLogin(data) {
+        if (data.toString().indexOf("!DOCTYPE") > 0) {
+            return true;
+        }
+        return false;
+    }
+</script>

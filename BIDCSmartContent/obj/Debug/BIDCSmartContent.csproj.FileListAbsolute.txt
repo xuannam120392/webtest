@@ -1,0 +1,11 @@
+D:\VNPAY\DuanBIDC\BIDCSmartContent\BIDCSmartContent\bin\BIDCSmartContent.dll
+D:\VNPAY\DuanBIDC\BIDCSmartContent\BIDCSmartContent\bin\BIDCSmartContent.pdb
+D:\VNPAY\DuanBIDC\BIDCSmartContent\BIDCSmartContent\obj\Debug\BIDCSmartContent.dll
+D:\VNPAY\DuanBIDC\BIDCSmartContent\BIDCSmartContent\obj\Debug\BIDCSmartContent.pdb
+D:\VNPAY\DuanBIDC\BIDCSmartContent\BIDCSmartContent\obj\Debug\BIDCSmartContent.csprojResolveAssemblyReference.cache
+D:\tailieu_long\BIDCSmartContent\BIDCSmartContent\bin\BIDCSmartContent.dll.config
+D:\tailieu_long\BIDCSmartContent\BIDCSmartContent\bin\BIDCSmartContent.dll
+D:\tailieu_long\BIDCSmartContent\BIDCSmartContent\bin\BIDCSmartContent.pdb
+D:\tailieu_long\BIDCSmartContent\BIDCSmartContent\obj\Debug\BIDCSmartContent.dll
+D:\tailieu_long\BIDCSmartContent\BIDCSmartContent\obj\Debug\BIDCSmartContent.pdb
+D:\tailieu_long\BIDCSmartContent\BIDCSmartContent\obj\Debug\BIDCSmartContent.csprojResolveAssemblyReference.cache

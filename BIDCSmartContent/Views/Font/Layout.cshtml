@@ -1,0 +1,75 @@
+﻿@model BIDVSmartContent.Models.Contact.ContactModel
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8">
+        <title>@Model.</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="description" content="@Model.DescMain" />
+        <meta name="keywords" content="@Model.Keyword">
+        <meta name="author" content="@Model.SiteMain">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="scripts/html5shiv.js"></script>
+        <![endif]-->
+
+    <!-- CSS -->
+        <link href="@Url.Content("~/Content/Frontend/css/bootstrap.min.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/Frontend/css/animate.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/Frontend/css/simple-line-icons.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/Frontend/css/icomoon-soc-icons.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/Frontend/css/magnific-popup.css")" rel="stylesheet" />
+        <link href="@Url.Content("~/Content/Frontend/css/style.css")" rel="stylesheet" />
+        <script src="@Url.Content("~/Content/Frontend/scripts/jquery-1.8.2.min.js")"></script>
+    </head>
+    <body data-spy="scroll" data-target=".navMenuCollapse">
+        @RenderBody();
+    <!-- JavaScript --> 
+        <script src="@Url.Content("~/Content/Frontend/scripts/bootstrap.min.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/owl.carousel.min.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/jquery.validate.min.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/wow.min.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/smoothscroll.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/jquery.smooth-scroll.min.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/jquery.superslides.min.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/placeholders.jquery.min.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/jquery.magnific-popup.min.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/jquery.stellar.min.js")"></script>
+        <script src="@Url.Content("~/Content/Frontend/scripts/custom.js")"></script>
+        <!--[if lte IE 9]>
+	        <script src="scripts/respond.min.js"></script>
+        <![endif]-->
+        @RenderSection("scripts", required: false)
+        <script src="@Url.Content("~/Content/Frontend/scripts/retina.min.js")"></script>
+        <div class="modal fade" id="popup_ios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">      
+                        <h4 class="modal-title text-center" id="myModalLabel">Thông báo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <center>Ứng dụng hiện tại đang được kiểm duyệt bởi Apple.</center>
+                    </div>
+                    <div class="modal-footer" style="text-align:center">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="popup_window_phone" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">      
+                        <h4 class="modal-title text-center" id="myModalLabel">Thông báo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <center>Ứng dụng hiện tại đang được kiểm duyệt bởi Windows Store.</center>
+                      </div>
+                    <div class="modal-footer" style="text-align:center">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

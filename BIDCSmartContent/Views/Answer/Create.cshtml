@@ -1,0 +1,115 @@
+﻿@using BIDVSmartContent.Models.FunctionModel
+
+@{
+    ViewBag.Title = "Create Answer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    Html.RenderPartial("_NavigationTitleLink", "Answer List");
+}
+<div class="page-content">
+    <div class="page-content-area">
+        @{
+            Html.RenderPartial("_HeaderPage", new[] { "Answer Manager", "Add New Answer" });
+        }
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <form class="form-horizontal" role="form">
+                    <div class="form-group clearfix">
+                        <div class="col-md-offset-2 col-md-9">
+                            <label id="lblMessage" class="lblmsg"></label>
+                        </div>
+                    </div>                    
+                    <div class="form-group clearfix">
+                        <label class="col-sm-2 control-label no-padding-right p_top"> Question Content(<span class="red">*</span>): </label>
+                        <div class="col-sm-10">
+                           <textarea id="editor2" name="editor2"> </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group clearfix">
+                        <label class="col-sm-2 control-label no-padding-right"> Answer Content(<span class="red">*</span>): </label>
+                        <div class="col-sm-10">
+                                <textarea id="editor1" name="editor1"> </textarea>
+                        </div>
+                    </div>
+                    <div class="clearfix form-actions">
+                        <div class="col-md-offset-2 col-md-9"><a class="btn btn-info" id="create" href="">Save</a>&nbsp;<a class="btn btn-info" href="@Url.Action("Index", "Answer", new { f = FunctionIdConstant.FuncSupportId, c = FunctionIdConstant.FuncAnswerList})">Go to List</a></div>
+                    </div>
+                </form>
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Notification</h4>
+            </div>
+            <div class="modal-body">Do you want to delete this record?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        CKEDITOR.replace("editor1");
+        CKEDITOR.replace("editor2");
+        var check = true;
+        $(document).ready(function ()
+        {
+            if (!check) return false;
+            $('#create').click(function() {
+                var model = {
+                    AS_CONTENT: $('#editor1').text(CKEDITOR.instances["editor1"].getData()).val(),
+                    QS_CONTENT: $('#editor2').text(CKEDITOR.instances["editor2"].getData()).val()
+                };
+                if (model.AS_CONTENT === "" || model.QS_CONTENT === "") {
+                    document.getElementById("lblMessage").innerText = "Question and Answer must be require.";
+                    document.getElementById("lblMessage").style.color = "red";
+                    return false;
+                }
+                $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    url: '/Answer/Create',
+                    type: 'POST',
+                    data: JSON.stringify(model)
+                }).success(function (data)
+                {
+                    if (redirectToLogin(data))
+                    {
+                        window.location.href = "/Account/Login";
+                    }
+                    else
+                    {
+                        document.getElementById("lblMessage").innerText = data;
+                        document.getElementById("lblMessage").style.color = "green";
+                    }
+
+                }).error(function (data)
+                {
+
+                });
+                return false;
+            });
+        });
+        function redirectToLogin(data)
+        {
+            if (data.toString().indexOf("!DOCTYPE") > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        
+    </script>
+}
+

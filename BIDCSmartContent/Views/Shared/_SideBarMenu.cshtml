@@ -1,0 +1,58 @@
+﻿@using System.Diagnostics
+@using BIDVSmartContent.Models.FunctionModel
+@{
+    var funcs = ViewBag.FuncsLeftMenu as List<FunctionViewModel>;
+}
+
+<div id="sidebar" class="sidebar responsive">
+    <ul class="nav nav-list">
+        @if (funcs != null && funcs.Count > 0)
+        {
+            foreach (var item in funcs.Where(x => x.FuncLevel == 1))
+            {
+                <li class="hsub" id="@item.FuncId">
+                    <a href="#" class="dropdown-toggle" id="@item.FuncId">
+                        <i class="@string.Format("menu-icon fa fa-{0}", item.FuncCode)"></i><span class="menu-text">@item.FuncName</span>
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    @if (item.ChildFunctions.Any())
+                    {                       
+                        @ShowMenu(item.ChildFunctions, item.FuncId)
+                    }
+                </li>
+
+            }
+        }
+    </ul>
+</div>
+@helper ShowMenu(List<FunctionViewModel> items, decimal funcId)
+{
+    <ul class="submenu">
+        @foreach (var item in items.Where(x => x.FuncDisplay == "1"))
+        {
+            if (item.ChildFunctions.Any() && item.FuncLevel == 2)
+            {
+                <li class="hsub">
+                    <a href="#" class="dropdown-toggle" id="">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        @item.FuncName
+                    </a>
+                    <b class="arrow"></b>
+                    @ShowMenu(item.ChildFunctions, funcId)
+                </li>
+            }
+            else
+            {
+                <li id="@item.FuncId">
+                    <a href="@Url.Content("~" + item.FuncControl)?f=@funcId&c=@item.FuncId">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        @item.FuncName
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+            }
+        }
+    </ul>
+}
+

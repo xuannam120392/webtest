@@ -1,0 +1,173 @@
+﻿@model BIDVSmartContent.Models.Home.HomeViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Font/Layout.cshtml";
+}
+@using (Html.BeginForm()) {
+<div id="wrap">    
+	<!-- NAVIGATION BEGIN -->  
+	@Html.Partial("~/Views/Shared/_Header.cshtml", Model.MenuListModel); 
+	<!-- NAVIGAION END --> 
+	
+	<!-- INTRO BEGIN -->
+	<header id="full-intro" class="intro-block bg-color-main" >
+		<div class="container">
+			<div class="row">				
+                <div class="col-md-8 col-sm-12"> 
+                <div class="right-banner">
+                <h2 class="title-main">@Model.HomeTitle </h2>
+					<div class="decription">
+                        <p>@Model.HomeDesc</p>
+                    </div>
+                    <div class="bts">
+					    <a href="@Model.LinkOs.Value">
+                            <img src="@Url.Content("~/Content/Frontend/images/btn1.png")" width="105" height="105" alt=""/><br>@Model.LinkOs.Desc
+                        </a>
+                        <a href="@Model.LinkAndroid.Value">
+                            <img src="@Url.Content("~/Content/Frontend/images/btn2.png")" width="105" height="105" alt="" /><br>@Model.LinkAndroid.Desc
+                        </a>
+                        <a href="@Model.LinkWindow.Value">
+                            <img src="@Url.Content("~/Content/Frontend/images/btn3.png")" width="105" height="105" alt="" /><br>@Model.LinkWindow.Desc
+                        </a>
+                    </div>
+                 </div>
+                 </div>
+			    <div class="col-md-4 hidden-sm hidden-xs">
+			        <img class="intro-screen" data-wow-delay="0.5s" src="@Url.Content("~/Content/Frontend/images/intro_screen.png")" width="412" height="511" alt="" />
+			    </div>
+			</div>
+		</div>
+		<div class="block-bg" data-stellar-ratio="0.4"></div>
+	</header>
+	<!-- INTRO END --> 
+	
+	<!-- FEATURES BEGIN -->
+	<section id="features" class="img-block-3col">
+		<div class="container">
+			    <div class="title">
+				    <h2>@Model.FeatureTitle</h2>
+			    </div>            
+		   
+             <div class="row">	
+              <div class="col-md-12">			
+			     <div id="screenshots-slider" class="owl-carousel">
+                      @foreach (var item in Model.ListBlockFrontFeature)
+                      {  
+                        <div class="item"> 
+                         @foreach (var block in item.ListBlockFeature)
+                          {
+                             if(block.TAB == "3")
+                             {                         
+                            <div class="col-md-4 tab1">
+                            <img src= "@Url.Content("~/Upload/Tab")@block.TAB/@block.IMAGE" width="140" height="140" alt=""/>
+                                  <ul class="item-list-left item-list-big">						
+                                    <li>
+                                        @Html.Raw(block.CONTENT)                     
+                                    </li>
+                                  </ul>
+                            </div>
+                             }
+                             else if (block.TAB == "2")
+                             {
+                                 <div class="col-md-4 tab2">
+                                    <img src= "@Url.Content("~/Upload/Tab")@block.TAB/@block.IMAGE" width="140" height="140" alt=""/>
+                                          <ul class="item-list-left item-list-big">						
+                                            <li>
+                                                @Html.Raw(block.CONTENT)                     
+                                            </li>
+                                          </ul>
+                                  </div>
+                             }
+                             else
+                             {
+                             <div class="col-md-4 tab3">
+                                <img src= "@Url.Content("~/Upload/Tab")@block.TAB/@block.IMAGE" width="140" height="140" alt=""/>
+                                      <ul class="item-list-left item-list-big">						
+                                        <li>
+                                           @Html.Raw(block.CONTENT)                   
+                                        </li>
+                                      </ul>
+                            </div>
+                             }
+                          }                                                                      
+                         </div>   
+                      }         
+                 </div>
+              </div>				
+			</div>
+	    </div>
+	</section>
+	<!-- FEATURES END --> 
+	
+	<!-- DOWNLOAD BEGIN -->
+	<section id="download">
+		<div class="container">
+            <div class="title">
+                <h2>@Model.DownloadTitle</h2>
+                <p>@Model.DownloadDesc</p>
+            </div>
+            <div class="row download-cont">
+                <div class="col-md-4">
+                    <div class="downloads">
+                        <img class="left-col" src="@Url.Content("~/Content/Frontend/images/img-download1.png")" width="110" height="185" alt=""/> 
+                        <h3>@Model.LinkOs.Desc</h3>
+                        <div class="btn-download"><a href="@Model.LinkOs.Value">@Model.DownloadText</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="downloads">
+                        <img class="left-col" src="@Url.Content("~/Content/Frontend/images/img-download2.png")" width="110" height="185" alt=""/>
+                        <h3>@Model.LinkAndroid.Desc</h3>
+                        <div class="btn-download"><a href="@Model.LinkAndroid.Value">@Model.DownloadText</a></div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="downloads">
+                        <img class="left-col" src="@Url.Content("~/Content/Frontend/images/img-download3.png")" width="120" height="185" alt=""/>
+                        <h3>@Model.LinkWindow.Desc</h3>
+                        <div class="btn-download"><a href="@Model.LinkWindow.Value">@Model.DownloadText</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</section>
+	<!-- DOWNLOAD END -->
+    <section id="guide" class="section-download">
+        <div class="container">
+            <div class="col-xs-12">
+                <div class="title">
+                    <h2>@Model.GuideTitle</h2>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="box">
+                    <div class="title-col2">
+                        <h3>@Model.BlockUserGuide.TITLE</h3>
+                    </div>
+                    <div class="box-cont clearfix">
+                        <ul class="item-list-left item-list-big">
+                            <li>
+                               @Html.Raw(Model.BlockUserGuide.CONTENT)
+                            </li>
+                        </ul>
+	                    <div class="quicklink">
+                            <p>@Html.ActionLink(Model.QuestionTitle,"Index","Question")</p>
+                            @*<p> @Html.ActionLink(Model.Privacy,"Index","Term")</p>*@
+                             @foreach (var item in Model.ListImageType)
+                             {
+                                <p><a href="@Url.Content("~/Upload/Image/")@item.URL">@item.TITLE</a></p>
+                             }
+
+                        </div>
+                     </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <img src="@Url.Content("~/Upload/Image/")@Model.LinkVideo" width=" 582" height="362" alt="" />
+            </div>
+        </div>
+    </section>
+	<!-- SOCIAL BEGIN -->
+	@Html.Partial("~/Views/Shared/_Contact.cshtml"); 	
+</div>
+}

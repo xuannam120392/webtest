@@ -1,0 +1,50 @@
+﻿@model BIDVSmartContent.Models.Event.EventViewModels
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Font/Layout.cshtml";
+}
+@using (Html.BeginForm()) {
+	<nav class="navbar navbar-fixed-top navbar-slide">
+		<div class="container"> <div class="row"><a class="navbar-brand goto" href="http://localhost:27550/Index/Index"> <img src="~/Content/Frontend/images/logo_nav.png" alt="Your logo" width="151" height="63" /> </a>
+			<button class="navbar-toggle menu-collapse-btn collapsed" data-toggle="collapse" data-target=".navMenuCollapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+			<div class="collapse navbar-collapse navMenuCollapse">
+				<ul class="nav">							
+					<li><a href="index.html#full-intro">Trang chủ</a> </li>
+                  <li><a href="index.html#features">Tính năng</a> </li>
+				<li><a href="index.html#download">Tải ứng dụng</a></li>
+                <li><a href="index.html#guide">Hướng dẫn sử dụng</a></li>
+                <li class="active"><a href="tin-tuc.html">Tin tức</a></li>
+				 <li class="last"><a href="index.html#contact">Liên hệ</a></li>
+				</ul>
+			</div>
+		</div>
+        </div>
+	</nav>
+	<!-- NAVIGAION END --> 
+	
+	<section id="news-box" class="section-contact">
+  <div class="container">
+    <div class="row">
+      <div class="title-col">
+        <h1>Tin tức & Sự kiện</h1>
+      </div>
+      <div class="news-box-cont clearfix">         
+          <h2>@Model.ListNewDetail.TITLE</h2>
+          <p class="date">17/09/2015 - 12h:30</p> 
+          <p align="center"> @Html.Raw(@Model.ListNewDetail.CONTENT) </p>        
+      </div>
+      <div class="box-other">
+      <h2>Tin tức liên quan khác</h2>
+      <ul>
+      <li><a href="#">BIDV tham gia chương trình kết nối Ngân hàng BIDV</a></li>
+      <li><a href="#">Ứng dụng tương thích với tất cả dòng điện thoại thông minh/a></li>
+      <li><a href="#">BIDV tham gia chương trình kết nối Ngân hàng BIDV</a></li>
+      <li><a href="#">Ứng dụng tương thích với tất cả dòng điện thoại thông minh</a></li> 
+      <li><a href="#">BIDV tham gia chương trình kết nối Ngân hàng BIDV</a></li>     
+      </ul>
+      </div>
+    </div>
+  </div>
+</section>
+    @Html.Partial("~/Views/Shared/_Contact.cshtml"); 
+}

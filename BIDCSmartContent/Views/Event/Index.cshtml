@@ -1,0 +1,44 @@
+﻿@model BIDVSmartContent.Models.Event.EventViewModels
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Font/Layout.cshtml";
+}
+@using (Html.BeginForm()) {
+<nav class="navbar navbar-fixed-top navbar-slide">
+		<div class="container"> <div class="row"><a class="navbar-brand goto" href="http://localhost:27550/Index/Index"> <img src="~/Content/Frontend/images/logo_nav.png" alt="Your logo" width="151" height="63" /> </a>
+			<button class="navbar-toggle menu-collapse-btn collapsed" data-toggle="collapse" data-target=".navMenuCollapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+			<div class="collapse navbar-collapse navMenuCollapse">
+				<ul class="nav">							
+					<li><a href="index.html#full-intro">Trang chủ</a> </li>
+                  <li><a href="index.html#features">Tính năng</a> </li>
+				<li><a href="index.html#download">Tải ứng dụng</a></li>
+                <li><a href="index.html#guide">Hướng dẫn sử dụng</a></li>
+                <li class="active"><a href="tin-tuc.html">Tin tức</a></li>
+				 <li class="last"><a href="index.html#contact">Liên hệ</a></li>
+				</ul>
+			</div>
+		</div>
+        </div>
+</nav>
+<section id="news-box" class="section-contact">
+  <div class="container">
+    <div class="row">
+      <div class="title-col">
+        <h1>Tin tức & Sự kiện</h1>
+      </div>
+      <div class="news-box-cont clearfix">
+      <div class="list-news row">
+          @foreach (var item in Model.ListNewEvent)
+          {
+            <div class="col-md-4">
+                <a href="/Event/Detail/@item.ID"><img class="img-responsive" src="~/Upload/News/@item.IMGPATH" alt="" width="370" height="200"><span class="decrips"> @Html.Raw(item.TITLE) </span></a>
+            </div>
+          }
+           
+        </div> 
+      </div>
+    </div>
+  </div>
+</section>
+    @Html.Partial("~/Views/Shared/_Contact.cshtml"); 
+}

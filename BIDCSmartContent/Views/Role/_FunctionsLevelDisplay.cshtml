@@ -1,0 +1,80 @@
+﻿@using BIDVSmartContent.Models.FunctionModel
+@model BIDVSmartContent.Models.FunctionModel.FunctionViewModel
+
+@if (Model.ChildFunctions.Count > 0 && Model.ChildFunctions.First().FuncLevel == 3)
+{
+    <div class="row">
+        <div class="page-header"></div>
+        @{
+    Html.RenderPartial("_FunctionItemDisplay", new Dictionary<string, FunctionViewModel>()
+            {
+                {"red", Model}
+            });
+        }
+    </div>
+    if (Model.ChildFunctions.Count > 0)
+    {
+        foreach (var subItem in Model.ChildFunctions)
+        {
+
+            <div class="row">
+                @{
+            Html.RenderPartial("_FunctionItemDisplay", new Dictionary<string, FunctionViewModel>()
+                 {
+                     {"blue", subItem}
+                 });
+            if (subItem.ChildFunctions.Count > 0)
+            {
+                foreach (var childFunc in subItem.ChildFunctions)
+                {
+                    if (subItem.ChildFunctions.IndexOf(childFunc) == 3)
+                    {
+                        <div class="col-md-3"></div>
+                    }
+                    Html.RenderPartial("_FunctionItemDisplay", new Dictionary<string, FunctionViewModel>()
+                         {
+                             {"", childFunc}
+                         });
+                }
+            }
+                }
+
+            </div>
+        }
+
+    }
+}
+else if (Model.ChildFunctions.Count > 0 && Model.ChildFunctions.First().FuncLevel == 4)
+{
+    <div class="row">
+        <div class="page-header"></div>
+        @{
+    Html.RenderPartial("_FunctionItemDisplay", new Dictionary<string, FunctionViewModel>()
+            {
+                {"red", Model}
+            });
+        }
+        @foreach (var subItem in Model.ChildFunctions)
+        {
+            Html.RenderPartial("_FunctionItemDisplay", new Dictionary<string, FunctionViewModel>()
+                         {
+                             {"", subItem}
+                         });
+        }
+    </div>
+}
+else if (Model.ChildFunctions.Count == 0)
+{
+    <div class="row">
+        <div class="page-header"></div>
+        <div class="col-md-4">
+            <label class="position-relative">
+                <input type="checkbox" id="@Model.FuncId" value="@Model.FuncId" class="ace" />
+                <span class="lbl" />
+                <strong class="red">@Model.FuncName</strong>
+            </label>
+        </div>
+    </div>
+}
+
+

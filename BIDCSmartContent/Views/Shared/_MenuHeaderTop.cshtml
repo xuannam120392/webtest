@@ -1,0 +1,23 @@
+﻿@model List<BIDVSmartContent.Models.FunctionModel.FunctionViewModel>
+
+<ul class="nav-top">
+
+    @foreach (var item in @Model)
+    {
+        @*if (item == @Model.First())
+        {
+            <li class="active"><a href="@Url.Action("Index","Home")" id="@string.Format("tab-{0}", item.FuncId)"><i class="@string.Format("menu-icon fa fa-{0}", item.FuncCode)"></i><span class="text-top"></span>@item.FuncName</a></li>
+        }
+        else
+        {
+            <li><a href="@Url.Action("Index","Home")" id="@string.Format("tab-{0}", item.FuncId)"><i class="@string.Format("menu-icon fa fa-{0}", item.FuncCode)"></i><span class="text-top"></span>@item.FuncName</a></li>
+        }*@
+        <li id="@item.FuncId">
+            <a href="@Url.Action("Index","Home")" id="@item.FuncId"><i class="@string.Format("menu-icon fa fa-{0}", item.FuncCode)"></i>
+                <span class="text-top"></span>@item.FuncName
+            </a>
+        </li>
+    }
+</ul>
+
+

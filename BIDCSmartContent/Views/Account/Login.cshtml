@@ -1,0 +1,67 @@
+﻿   @model BIDVSmartContent.Models.UserModel.LoginViewModel
+
+@{
+    ViewBag.Title = "Login User";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <div class="login-container">
+                <div class="center" style="padding:10px 0"><img src="~/Content/images/logo_nav.png" width="200" height="54" alt="logo"></div>
+                <div class="space-6"></div>
+                <div class="position-relative">
+                    <div id="login-box" class="login-box visible widget-box no-border">
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <h4 class="header blue lighter bigger"><i class="default-icon fa fa-lock blue"></i>Login</h4>
+                                <div class="space-6"></div>
+                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <fieldset>
+                                        <label class="block clearfix">
+                                            <span class="block input-icon input-icon-right">
+                                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username" })
+                                                @*<input type="text" class="form-control" placeholder="Username" />*@
+                                                <i class="default-icon fa fa-user"></i>
+                                            </span>
+                                        </label>
+                                        <label class="block clearfix">
+                                            <span class="block input-icon input-icon-right">
+                                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                                                @*<input type="password" class="form-control" placeholder="Password" />*@
+                                                <i class="default-icon fa fa-lock"></i>
+                                            </span>
+                                        </label>
+                                        <div class="space"></div>
+                                        <div>
+                                            <span class="red">@Html.ValidationSummary(false)</span>
+                                        </div>
+                                        <div class="clearfix" style="text-align: center">
+                                            <div>
+                                                <input type="submit" value="Login" class="width-35 btn btn-sm btn-primary">
+                                            </div>
+                                            @*<a class="width-35 btn btn-sm btn-primary" href=""><i class="default-icon fa fa-key"></i><span class="bigger-110">Login</span></a>*@
+                                        </div>
+                                        <div class="space-4"></div>
+                                    </fieldset>
+                                }
+                            </div>
+                            <!-- /.widget-main -->
+                            <div class="toolbar clearfix">
+                            </div>
+                        </div>
+                        <!-- /.widget-body -->
+                    </div>
+                    <!-- /.login-box --><!-- /.signup-box -->
+                </div>
+                <!-- /.position-relative -->
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
